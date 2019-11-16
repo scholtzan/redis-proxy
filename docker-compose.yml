@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    build: .
+    command: ["sbt", "run"]
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "127.0.0.1:$PORT:$PORT"
+    networks:
+      - redis-net
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    hostname: redis
+    networks:
+      - redis-net
+
+networks:
+  redis-net:
